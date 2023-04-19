@@ -618,10 +618,9 @@ while True:
                                                         x = requests.get(
                                                             'http://192.168.3.1:8135/responder-pergunta?pergunta='+perguntaburro).text
 
-                                                        if "código" in text and len(text.split()) == 2:
-
+                                                        if "código" in perguntaburro and len(perguntaburro.split()) == 2 or "Código" in perguntaburro and len(perguntaburro.split()) == 2:
                                                             codigo = 0
-                                                            codig = text.split()
+                                                            codig = perguntaburro.split()
                                                             numecod = len(
                                                                 codig)
                                                             while codigo < numecod:
@@ -635,7 +634,7 @@ while True:
                                                                 'http://192.168.3.1:8135/codigo/')
                                                             produto = requests.get(
                                                                 "http://192.168.3.1:8134/java/produto/")
-
+                                                        print(z.text)
                                                         try:
                                                             if len(wy.text) > 5 and len(ds[uy]) > 3:
                                                                 objetoss = json.loads(
@@ -846,7 +845,7 @@ while True:
                                                             engine.say(texto)
                                                             engine.runAndWait()
                                                             break
-                                                        elif "Tem" in text and "loja" in text or "se a" in text and "loja" in text or "Tem" in text and "othon" in text or "tem" in text and "loja" in text or "tem" in text and "othon" in text or "vende" in text and "othon" in text or "vende" in text and "loja" in text:
+                                                        elif "Tem" in perguntaburro and "loja" in perguntaburro or "se a" in perguntaburro and "loja" in perguntaburro or "Tem" in perguntaburro and "othon" in perguntaburro or "tem" in perguntaburro and "loja" in perguntaburro or "tem" in perguntaburro and "othon" in perguntaburro or "vende" in perguntaburro and "othon" in perguntaburro or "vende" in perguntaburro and "loja" in perguntaburro:
                                                             loop = 100
                                                             engine = pyttsx3.init()
                                                             engine.setProperty(
@@ -1428,6 +1427,7 @@ while True:
                                                             engine.runAndWait()
                                                             break
                                                         elif z.status_code == 200:
+                                                            print("Entrou")
                                                             codprod = json.loads(
                                                                 produto.content)
                                                             ob = codprod[0]
@@ -1454,11 +1454,11 @@ while True:
                                                             my_string = falar[0]
                                                             last_letter = my_string[-1]
                                                             if last_letter == "A":
-                                                                texto = " de acordo com meus dados é uma ", falar[0], falar[
-                                                                    1], " a quantidade disponivel no CD é de ", estoqueCD, " o estoque Total da Othon incluindo estoque bloqueado, reservado entre outros é de ", estoqueOthon, " o estoque disponivel na Othon para vendas é de ", estoquedisponivel
+                                                                texto = " de acordo com meus dados é uma ", falar[0], " ", falar[
+                                                                    1], '\n', " a quantidade disponivel no CD é de ", estoqueCD, '\n', " o estoque Total da Othon incluindo estoque bloqueado, reservado entre outros é de ", estoqueOthon, '\n', " o estoque disponivel na Othon para vendas é de ", estoquedisponivel
                                                             else:
                                                                 texto = " de acordo com meus dados é um ", falar[0], falar[
-                                                                    1], " a quantidade disponivel no CD é de ", estoqueCD, " o estoque Total da Othon incluindo estoque bloqueado, reservado entre outros é de ", estoqueOthon, " o estoque disponivel na Othon para vendas é de ", estoquedisponivel
+                                                                    1], '\n', " a quantidade disponivel no CD é de ", estoqueCD, '\n', " o estoque Total da Othon incluindo estoque bloqueado, reservado entre outros é de ", estoqueOthon, '\n', " o estoque disponivel na Othon para vendas é de ", estoquedisponivel
                                                             import tkinter as tk
                                                             root = tk.Tk()
                                                             root.withdraw()
@@ -1696,329 +1696,14 @@ while True:
                                                             engine.say(texto)
                                                             engine.runAndWait()
                                                             break
-                                                    loops += 1
-                                                audio = text.split()
-                                                tamanhoAudio = len(audio)
-                                                tratamentoErros = 0
-                                                while tratamentoErros < tamanhoAudio:
-                                                    if audio[tratamentoErros] == 'áudio':
-                                                        tratamentoErros = 10
-                                                        engine = pyttsx3.init()
-                                                        engine.setProperty(
-                                                            'rate', 200)
-                                                        engine.setProperty(
-                                                            'pitch', 100)
-                                                        engine.setProperty(
-                                                            'volume', 0.9)
-                                                        voices = engine.getProperty(
-                                                            'voices')
-                                                        engine.setProperty(
-                                                            'voice', voices[0].id)
-                                                        texto = "Agora Basta Fazer sua Pergunta!"
-                                                        engine.say(texto)
-                                                        engine.runAndWait()
-                                                        r = sr.Recognizer()
-                                                        with sr.Microphone() as source:
-                                                            audio = r.listen(
-                                                                source)
-                                                        try:
-                                                            perguntaburro = ""
-                                                            perguntaburro = r.recognize_google(
-                                                                audio, language='pt-BR')
-                                                            window['senha'].update(
-                                                                perguntaburro.capitalize() + "?")
-                                                            a = perguntaburro.lower()
-                                                            b = a[:-1]
-                                                            c = len(b.split())
-                                                            d = b.split()
-                                                            e = a.capitalize()
-                                                            u = c - 1
-                                                            horadata = 0
-                                                            hora = 0
-                                                        except sr.UnknownValueError:
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "Não foi possível entender o áudio "
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
-                                                            break
-                                                        except sr.RequestError as e:
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                e)
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
-                                                            break
-                                                        while horadata < c:
-                                                            if d[horadata] == "horas":
-                                                                hora = requests.get(
-                                                                    'http://192.168.3.1:8135/times').content
-                                                                horas = json.loads(
-                                                                    hora)
-                                                            horadata += 1
-                                                        datas = 0
-                                                        data = 0
-                                                        while datas < c:
-                                                            if d[datas] == "dia" or d[datas] == "data":
-                                                                data = requests.get(
-                                                                    'http://192.168.3.1:8135/datess').content
-                                                                dataCerta = json.loads(
-                                                                    data)
-                                                            datas += 1
-                                                        if data != 0:
 
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "Hoje é dia", dataCerta["dia"], " do ", dataCerta[
-                                                                "mes"], " de ", dataCerta["ano"]
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
-                                                            break
-
-                                                        elif hora != 0:
-
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
-                                                            break
-                                                        elif len(perguntaburro) > 3:
-                                                            prompt = perguntaburro+"?"
-                                                            completion = openai.Completion.create(
-                                                                engine=model_engine,
-                                                                prompt=prompt,
-                                                                max_tokens=500,
-                                                                temperature=0.5,
-                                                            )
-                                                            response = completion.choices[0].text
-
-                                                            import tkinter as tk
-                                                            root = tk.Tk()
-                                                            root.withdraw()
-                                                            largura = root.winfo_screenwidth()
-                                                            altura = root.winfo_screenheight()
-                                                            larguras = int(
-                                                                largura)
-                                                            alturas = int(
-                                                                altura)
-                                                            alturasoma = alturas-300
-                                                            if alturasoma < 250:
-                                                                alturasoma = 250
-                                                            lagurasoma = larguras-300
-                                                            if lagurasoma < 250:
-                                                                lagurasoma = 250
-                                                            # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
-                                                            img = Image.new(
-                                                                'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
-                                                            cloud_img = Image.open(
-                                                                './imagem/04.png').resize((lagurasoma, alturasoma))
-                                                            # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
-                                                            img.paste(
-                                                                cloud_img, (0, 0), mask=cloud_img)
-                                                            # Cria um objeto de desenho para a imagem
-                                                            draw = ImageDraw.Draw(
-                                                                img)
-                                                            # Define as configurações de fonte e cor para o texto
-                                                            font = ImageFont.truetype(
-                                                                'arial.ttf', 18)
-                                                            # RGBA: preto opaco
-                                                            text_color = (
-                                                                0, 0, 0, 255)
-                                                            # Define o texto a ser exibido e a posição
-                                                            window.Refresh()
-                                                            text = response
-                                                            limite = 95
-                                                            atual = 1
-                                                            novaString = ''
-                                                            numerolinha = 1
-                                                            if alturas == 768 and larguras == 1024:
-                                                                for x in text:
-                                                                    atual += 1
-                                                                    if atual >= 80 and x == ' ':
-                                                                        novaString = novaString + '\n'
-                                                                        atual = 1
-                                                                        numerolinha += 1
-                                                                    else:
-                                                                        novaString = novaString + x
-                                                            elif alturas == 768 and larguras == 1366:
-                                                                for x in text:
-                                                                    atual += 1
-                                                                    if atual >= 85 and x == ' ':
-                                                                        novaString = novaString + '\n'
-                                                                        atual = 1
-                                                                        numerolinha += 1
-                                                                    else:
-                                                                        novaString = novaString + x
-                                                            elif alturas == 800 and larguras == 1280:
-                                                                for x in text:
-                                                                    atual += 1
-                                                                    if atual >= 89 and x == ' ':
-                                                                        novaString = novaString + '\n'
-                                                                        atual = 1
-                                                                        numerolinha += 1
-                                                                    else:
-                                                                        novaString = novaString + x
-                                                            elif alturas == 864 and larguras == 1152:
-                                                                for x in text:
-                                                                    atual += 1
-                                                                    if atual >= 89 and x == ' ':
-                                                                        novaString = novaString + '\n'
-                                                                        atual = 1
-                                                                        numerolinha += 1
-                                                                    else:
-                                                                        novaString = novaString + x
-                                                            else:
-                                                                for x in text:
-                                                                    atual += 1
-                                                                    if atual >= 100 and x == ' ':
-                                                                        novaString = novaString + '\n'
-                                                                        atual = 1
-                                                                        numerolinha += 1
-                                                                    else:
-                                                                        novaString = novaString + x
-                                                            print(alturas)
-                                                            text_position = (
-                                                                275, 1)
-                                                            monitor = 0
-                                                            if alturas == 900 and larguras == 1600:
-                                                                monitor = 8
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    275, 20)
-                                                            elif alturas == 900 and larguras == 1440:
-                                                                monitor = 8
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    250, 10)
-                                                            elif alturas == 800 and larguras == 1280:
-
-                                                                monitor = 6
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    210, 10)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 16)
-                                                            elif alturas == 720 and larguras == 1280:
-                                                                monitor = 5
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    200, 10)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 15)
-                                                            elif alturas == 768 and larguras == 1280:
-                                                                monitor = 6
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    200, 10)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 15)
-                                                            elif alturas == 864 and larguras == 1152:
-                                                                monitor = 7
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    180, 30)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 15)
-                                                            elif alturas == 600 and larguras == 800:
-                                                                monitor = 0
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    95, 35)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 12)
-
-                                                            elif alturas > 1600:
-                                                                monitor = 100
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    275, 1)
-                                                            elif alturas == 768 and larguras == 1024:
-                                                                monitor = 5
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    150, 15)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 15)
-                                                            elif alturas == 768 and larguras == 1366:
-                                                                monitor = 5
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    230, 10)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 18)
-                                                            elif alturas == 768 and larguras == 1360:
-                                                                monitor = 5
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    210, 20)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 16)
-                                                            elif alturas < 600:
-                                                                monitor = 0
-                                                                if numerolinha > monitor:
-                                                                    novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                                text_position = (
-                                                                    100, 1)
-                                                                font = ImageFont.truetype(
-                                                                    'arial.ttf', 13)
-                                                                draw.text(
-                                                                    text_position, novaString, font=font, fill=text_color)
-                                                                # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
-                                                                img_file = 'cloud_temp.png'
-                                                                img.save(
-                                                                    img_file)
-                                                                window['textoteste'].update(
-                                                                    img_file)
-
+                                                        audio = text.split()
+                                                        tamanhoAudio = len(
+                                                            audio)
+                                                        tratamentoErros = 0
+                                                        while tratamentoErros < tamanhoAudio:
+                                                            if audio[tratamentoErros] == 'áudio':
+                                                                tratamentoErros = 10
                                                                 engine = pyttsx3.init()
                                                                 engine.setProperty(
                                                                     'rate', 200)
@@ -2030,221 +1715,761 @@ while True:
                                                                     'voices')
                                                                 engine.setProperty(
                                                                     'voice', voices[0].id)
-                                                                texto = response
+                                                                texto = "Agora Basta Fazer sua Pergunta!"
                                                                 engine.say(
                                                                     texto)
                                                                 engine.runAndWait()
+                                                                r = sr.Recognizer()
+                                                                with sr.Microphone() as source:
+                                                                    audio = r.listen(
+                                                                        source)
+                                                                try:
+                                                                    perguntaburro = ""
+                                                                    perguntaburro = r.recognize_google(
+                                                                        audio, language='pt-BR')
+                                                                    window['senha'].update(
+                                                                        perguntaburro.capitalize() + "?")
+                                                                    a = perguntaburro.lower()
+                                                                    b = a[:-1]
+                                                                    c = len(
+                                                                        b.split())
+                                                                    d = b.split()
+                                                                    e = a.capitalize()
+                                                                    u = c - 1
+                                                                    horadata = 0
+                                                                    hora = 0
+                                                                except sr.UnknownValueError:
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "Não foi possível entender o áudio "
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                    break
+                                                                except sr.RequestError as e:
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                        e)
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                    break
+                                                                while horadata < c:
+                                                                    if d[horadata] == "horas":
+                                                                        hora = requests.get(
+                                                                            'http://192.168.3.1:8135/times').content
+                                                                        horas = json.loads(
+                                                                            hora)
+                                                                    horadata += 1
+                                                                datas = 0
+                                                                data = 0
+                                                                while datas < c:
+                                                                    if d[datas] == "dia" or d[datas] == "data":
+                                                                        data = requests.get(
+                                                                            'http://192.168.3.1:8135/datess').content
+                                                                        dataCerta = json.loads(
+                                                                            data)
+                                                                    datas += 1
+                                                                if data != 0:
+
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
+                                                                        "mes"], " de ", dataCerta["ano"]
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                    import tkinter as tk
+                                                                    root = tk.Tk()
+                                                                    root.withdraw()
+                                                                    largura = root.winfo_screenwidth()
+                                                                    altura = root.winfo_screenheight()
+                                                                    larguras = int(
+                                                                        largura)
+                                                                    alturas = int(
+                                                                        altura)
+                                                                    alturasoma = alturas-300
+                                                                    if alturasoma < 250:
+                                                                        alturasoma = 250
+                                                                    lagurasoma = larguras-300
+                                                                    if lagurasoma < 250:
+                                                                        lagurasoma = 250
+                                                                    # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                                    img = Image.new(
+                                                                        'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                                    cloud_img = Image.open(
+                                                                        './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                                    # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                                    img.paste(
+                                                                        cloud_img, (0, 0), mask=cloud_img)
+                                                                    # Cria um objeto de desenho para a imagem
+                                                                    draw = ImageDraw.Draw(
+                                                                        img)
+                                                                    # Define as configurações de fonte e cor para o texto
+                                                                    font = ImageFont.truetype(
+                                                                        'arial.ttf', 18)
+                                                                    # RGBA: preto opaco
+                                                                    text_color = (
+                                                                        0, 0, 0, 255)
+                                                                    # Define o texto a ser exibido e a posição
+                                                                    window.Refresh()
+                                                                    text = texto
+                                                                    limite = 95
+                                                                    atual = 1
+                                                                    novaString = ''
+                                                                    numerolinha = 1
+                                                                    for x in text:
+                                                                        atual += 1
+                                                                        if atual >= 95 and x == ' ':
+                                                                            novaString = novaString + '\n'
+                                                                            atual = 1
+                                                                            numerolinha += 1
+                                                                        else:
+                                                                            novaString = novaString + \
+                                                                                str(x)
+                                                                    print(
+                                                                        alturas)
+                                                                    text_position = (
+                                                                        275, 1)
+                                                                    monitor = 0
+                                                                    if alturas == 900 and larguras == 1600:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 50)
+                                                                    elif alturas == 900 and larguras == 1440:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 40)
+                                                                    elif alturas == 800 and larguras == 1280:
+                                                                        monitor = 6
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            200, 50)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas == 864 and larguras == 1152:
+                                                                        monitor = 7
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            180, 50)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 600 and larguras == 800:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            100, 1)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    elif alturas == 1080:
+                                                                        monitor = 12
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1440:
+                                                                        monitor = 18
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1200:
+                                                                        monitor = 14
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1600:
+                                                                        monitor = 20
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas > 1600:
+                                                                        monitor = 100
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 768 and larguras == 1024:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            155, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    elif alturas == 768 and larguras == 1366:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            250, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas == 768 and larguras == 1360:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            250, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas < 600:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            100, 1)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    # if numerolinha > monitor:
+                                                                    #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                                    # text_position = (
+                                                                    #     275, 1)
+                                                                    # Desenha o texto na imagem com fundo transparente
+                                                                    draw.text(
+                                                                        text_position, novaString, font=font, fill=text_color)
+                                                                    # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                                    img_file = 'cloud_temp.png'
+                                                                    img.save(
+                                                                        img_file)
+                                                                    window['textoteste'].update(
+                                                                        img_file)
+                                                                    break
+
+                                                                elif hora != 0:
+
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                    import tkinter as tk
+                                                                    root = tk.Tk()
+                                                                    root.withdraw()
+                                                                    largura = root.winfo_screenwidth()
+                                                                    altura = root.winfo_screenheight()
+                                                                    larguras = int(
+                                                                        largura)
+                                                                    alturas = int(
+                                                                        altura)
+                                                                    alturasoma = alturas-300
+                                                                    if alturasoma < 250:
+                                                                        alturasoma = 250
+                                                                    lagurasoma = larguras-300
+                                                                    if lagurasoma < 250:
+                                                                        lagurasoma = 250
+                                                                    # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                                    img = Image.new(
+                                                                        'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                                    cloud_img = Image.open(
+                                                                        './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                                    # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                                    img.paste(
+                                                                        cloud_img, (0, 0), mask=cloud_img)
+                                                                    # Cria um objeto de desenho para a imagem
+                                                                    draw = ImageDraw.Draw(
+                                                                        img)
+                                                                    # Define as configurações de fonte e cor para o texto
+                                                                    font = ImageFont.truetype(
+                                                                        'arial.ttf', 18)
+                                                                    # RGBA: preto opaco
+                                                                    text_color = (
+                                                                        0, 0, 0, 255)
+                                                                    # Define o texto a ser exibido e a posição
+                                                                    window.Refresh()
+                                                                    text = texto
+                                                                    limite = 95
+                                                                    atual = 1
+                                                                    novaString = ''
+                                                                    numerolinha = 1
+                                                                    for x in text:
+                                                                        atual += 1
+                                                                        if atual >= 95 and x == ' ':
+                                                                            novaString = novaString + '\n'
+                                                                            atual = 1
+                                                                            numerolinha += 1
+                                                                        else:
+                                                                            novaString = novaString + \
+                                                                                str(x)
+                                                                    print(
+                                                                        alturas)
+                                                                    text_position = (
+                                                                        275, 1)
+                                                                    monitor = 0
+                                                                    if alturas == 900 and larguras == 1600:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 50)
+                                                                    elif alturas == 900 and larguras == 1440:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 40)
+                                                                    elif alturas == 800 and larguras == 1280:
+                                                                        monitor = 6
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            200, 50)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas == 864 and larguras == 1152:
+                                                                        monitor = 7
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            180, 50)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 600 and larguras == 800:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            100, 1)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    elif alturas == 1080:
+                                                                        monitor = 12
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1440:
+                                                                        monitor = 18
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1200:
+                                                                        monitor = 14
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 1600:
+                                                                        monitor = 20
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas > 1600:
+                                                                        monitor = 100
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 768 and larguras == 1024:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            155, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    elif alturas == 768 and larguras == 1366:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            250, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas == 768 and larguras == 1360:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            250, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas < 600:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            100, 1)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    # if numerolinha > monitor:
+                                                                    #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                                    # text_position = (
+                                                                    #     275, 1)
+                                                                    # Desenha o texto na imagem com fundo transparente
+                                                                    draw.text(
+                                                                        text_position, novaString, font=font, fill=text_color)
+                                                                    # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                                    img_file = 'cloud_temp.png'
+                                                                    img.save(
+                                                                        img_file)
+                                                                    window['textoteste'].update(
+                                                                        img_file)
+                                                                    break
+                                                                elif len(perguntaburro) > 3:
+                                                                    prompt = perguntaburro
+                                                                    completion = openai.Completion.create(
+                                                                        engine=model_engine,
+                                                                        prompt=prompt,
+                                                                        max_tokens=500,
+                                                                        temperature=0.5,
+                                                                    )
+                                                                    response = completion.choices[0].text
+                                                                    # window['mensagem'].update(
+                                                                    #     response)
+
+                                                                    import tkinter as tk
+                                                                    root = tk.Tk()
+                                                                    root.withdraw()
+                                                                    largura = root.winfo_screenwidth()
+                                                                    altura = root.winfo_screenheight()
+                                                                    larguras = int(
+                                                                        largura)
+                                                                    alturas = int(
+                                                                        altura)
+                                                                    alturasoma = alturas-300
+                                                                    if alturasoma < 250:
+                                                                        alturasoma = 250
+                                                                    lagurasoma = larguras-300
+                                                                    if lagurasoma < 250:
+                                                                        lagurasoma = 250
+                                                                    # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                                    img = Image.new(
+                                                                        'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                                    cloud_img = Image.open(
+                                                                        './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                                    # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                                    img.paste(
+                                                                        cloud_img, (0, 0), mask=cloud_img)
+                                                                    # Cria um objeto de desenho para a imagem
+                                                                    draw = ImageDraw.Draw(
+                                                                        img)
+                                                                    # Define as configurações de fonte e cor para o texto
+                                                                    font = ImageFont.truetype(
+                                                                        'arial.ttf', 18)
+                                                                    # RGBA: preto opaco
+                                                                    text_color = (
+                                                                        0, 0, 0, 255)
+                                                                    # Define o texto a ser exibido e a posição
+                                                                    window.Refresh()
+                                                                    text = response
+                                                                    limite = 100
+                                                                    atual = 1
+                                                                    novaString = ''
+                                                                    numerolinha = 1
+                                                                    if alturas == 768 and larguras == 1024:
+                                                                        for x in text:
+                                                                            atual += 1
+                                                                            if atual >= 80 and x == ' ':
+                                                                                novaString = novaString + '\n'
+                                                                                atual = 1
+                                                                                numerolinha += 1
+                                                                            else:
+                                                                                novaString = novaString + x
+                                                                    elif alturas == 768 and larguras == 1366:
+                                                                        for x in text:
+                                                                            atual += 1
+                                                                            if atual >= 85 and x == ' ':
+                                                                                novaString = novaString + '\n'
+                                                                                atual = 1
+                                                                                numerolinha += 1
+                                                                            else:
+                                                                                novaString = novaString + x
+                                                                    elif alturas == 800 and larguras == 1280:
+                                                                        for x in text:
+                                                                            atual += 1
+                                                                            if atual >= 89 and x == ' ':
+                                                                                novaString = novaString + '\n'
+                                                                                atual = 1
+                                                                                numerolinha += 1
+                                                                            else:
+                                                                                novaString = novaString + x
+                                                                    elif alturas == 864 and larguras == 1152:
+                                                                        for x in text:
+                                                                            atual += 1
+                                                                            if atual >= 89 and x == ' ':
+                                                                                novaString = novaString + '\n'
+                                                                                atual = 1
+                                                                                numerolinha += 1
+                                                                            else:
+                                                                                novaString = novaString + x
+                                                                    else:
+                                                                        for x in text:
+                                                                            atual += 1
+                                                                            if atual >= 100 and x == ' ':
+                                                                                novaString = novaString + '\n'
+                                                                                atual = 1
+                                                                                numerolinha += 1
+                                                                            else:
+                                                                                novaString = novaString + x
+                                                                    print(
+                                                                        alturas)
+                                                                    text_position = (
+                                                                        275, 1)
+                                                                    monitor = 0
+                                                                    if alturas == 900 and larguras == 1600:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 20)
+                                                                    elif alturas == 900 and larguras == 1440:
+                                                                        monitor = 8
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            250, 10)
+                                                                    elif alturas == 800 and larguras == 1280:
+
+                                                                        monitor = 6
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            210, 10)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 16)
+                                                                    elif alturas == 720 and larguras == 1280:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            200, 10)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 768 and larguras == 1280:
+                                                                        monitor = 6
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            200, 10)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 864 and larguras == 1152:
+                                                                        monitor = 7
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            180, 30)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 600 and larguras == 800:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            95, 35)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 12)
+
+                                                                    elif alturas > 1600:
+                                                                        monitor = 100
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            275, 1)
+                                                                    elif alturas == 768 and larguras == 1024:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            150, 15)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 15)
+                                                                    elif alturas == 768 and larguras == 1366:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            230, 10)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 18)
+                                                                    elif alturas == 768 and larguras == 1360:
+                                                                        monitor = 5
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            210, 20)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 16)
+                                                                    elif alturas < 600:
+                                                                        monitor = 0
+                                                                        if numerolinha > monitor:
+                                                                            novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                                        text_position = (
+                                                                            100, 1)
+                                                                        font = ImageFont.truetype(
+                                                                            'arial.ttf', 13)
+                                                                    # if numerolinha > monitor:
+                                                                    #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                                    # text_position = (
+                                                                    #     275, 1)
+                                                                    # Desenha o texto na imagem com fundo transparente
+                                                                    draw.text(
+                                                                        text_position, novaString, font=font, fill=text_color)
+                                                                    # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                                    img_file = 'cloud_temp.png'
+                                                                    img.save(
+                                                                        img_file)
+                                                                    window['textoteste'].update(
+                                                                        img_file)
+
+                                                                    # Cria a interface gráfica do usuário com o campo de entrada editável na imagem
+
+                                                                    #   [sg.InputText(key='-INPUT-', size=(50, 1))],
+                                                                    #   [sg.Button('Enviar')]]
+
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = response
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                    window.Enable()
+
+                                                                    break
+                                                                    # if videoTexto =="vídeo" or videoTexto== "em vídeo":
                                                                 break
-                                                        break
-                                                    elif audio[tratamentoErros] == 'vídeo':
-                                                        tratamentoErros = 10
-                                                        engine = pyttsx3.init()
-                                                        engine.setProperty(
-                                                            'rate', 200)
-                                                        engine.setProperty(
-                                                            'pitch', 100)
-                                                        engine.setProperty(
-                                                            'volume', 0.9)
-                                                        voices = engine.getProperty(
-                                                            'voices')
-                                                        engine.setProperty(
-                                                            'voice', voices[0].id)
-                                                        texto = "Agora Basta Fazer sua Pergunta!"
-                                                        engine.say(texto)
-                                                        engine.runAndWait()
-                                                        r = sr.Recognizer()
-                                                        with sr.Microphone() as source:
-                                                            audio = r.listen(
-                                                                source)
-                                                        try:
-                                                            perguntaburrovideo = ""
-                                                            perguntaburrovideo = r.recognize_google(
-                                                                audio, language='pt-BR')
-                                                        except sr.UnknownValueError:
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "Não foi possível entender o áudio"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
-                                                        except sr.RequestError as e:
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[0].id)
-                                                            texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                e)
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            elif audio[tratamentoErros] == 'vídeo':
+                                                                tratamentoErros = 10
+                                                                engine = pyttsx3.init()
+                                                                engine.setProperty(
+                                                                    'rate', 200)
+                                                                engine.setProperty(
+                                                                    'pitch', 100)
+                                                                engine.setProperty(
+                                                                    'volume', 0.9)
+                                                                voices = engine.getProperty(
+                                                                    'voices')
+                                                                engine.setProperty(
+                                                                    'voice', voices[0].id)
+                                                                texto = "Agora Basta Fazer sua Pergunta!"
+                                                                engine.say(
+                                                                    texto)
+                                                                engine.runAndWait()
+                                                                r = sr.Recognizer()
+                                                                with sr.Microphone() as source:
+                                                                    audio = r.listen(
+                                                                        source)
+                                                                try:
+                                                                    perguntaburrovideo = ""
+                                                                    perguntaburrovideo = r.recognize_google(
+                                                                        audio, language='pt-BR')
+                                                                except sr.UnknownValueError:
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "Não foi possível entender o áudio"
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
+                                                                except sr.RequestError as e:
+                                                                    engine = pyttsx3.init()
+                                                                    engine.setProperty(
+                                                                        'rate', 200)
+                                                                    engine.setProperty(
+                                                                        'pitch', 100)
+                                                                    engine.setProperty(
+                                                                        'volume', 0.9)
+                                                                    voices = engine.getProperty(
+                                                                        'voices')
+                                                                    engine.setProperty(
+                                                                        'voice', voices[0].id)
+                                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                        e)
+                                                                    engine.say(
+                                                                        texto)
+                                                                    engine.runAndWait()
 
-                                                        import os
-                                                        api_key = "AIzaSyAQnaak3RBQqHUX7Rml5nE9LV6TB1KLcJM"
-                                                        youtube = build('youtube', 'v3', developerKey=api_key,
-                                                                        static_discovery=False)
-                                                        request = youtube.search().list(
-                                                            part="id",
-                                                            q=perguntaburrovideo,
-                                                            type="video",
-                                                            maxResults=1
-                                                        )
-                                                        response = request.execute()
-                                                        video_id = response['items'][0]['id']['videoId']
-                                                        url = "https://www.youtube.com/watch?v=" + video_id
-                                                        os.system("vlc "+url)
+                                                                import os
+                                                                api_key = "AIzaSyAQnaak3RBQqHUX7Rml5nE9LV6TB1KLcJM"
+                                                                youtube = build('youtube', 'v3', developerKey=api_key,
+                                                                                static_discovery=False)
+                                                                request = youtube.search().list(
+                                                                    part="id",
+                                                                    q=perguntaburrovideo,
+                                                                    type="video",
+                                                                    maxResults=1
+                                                                )
+                                                                response = request.execute()
+                                                                video_id = response['items'][0]['id']['videoId']
+                                                                url = "https://www.youtube.com/watch?v=" + video_id
+                                                                os.system(
+                                                                    "vlc "+url)
 
-                                                        def PlayYT():
-                                                            url = "https://www.youtube.com/watch?v=" + video_id
-                                                            os.system(
-                                                                "vlc "+url + " --preferred-resolution=240")
-                                                        break
-                                                    tratamentoErros += 1
-                                            else:
-                                                loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty(
-                                                    'pitch', 100)
-                                                engine.setProperty(
-                                                    'volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[0].id)
-                                                textoa = ""
-                                                engine.say(textoa)
-                                                engine.runAndWait()
+                                                                def PlayYT():
+                                                                    url = "https://www.youtube.com/watch?v=" + video_id
+                                                                    os.system(
+                                                                        "vlc "+url + " --preferred-resolution=240")
+                                                                break
+                                                            tratamentoErros += 1
 
-                                                import tkinter as tk
-                                                root = tk.Tk()
-                                                root.withdraw()
-                                                largura = root.winfo_screenwidth()
-                                                altura = root.winfo_screenheight()
-                                                larguras = int(largura)
-                                                alturas = int(altura)
-                                                alturasoma = alturas-300
-                                                if alturasoma < 250:
-                                                    alturasoma = 250
-                                                lagurasoma = larguras-300
-                                                if lagurasoma < 250:
-                                                    lagurasoma = 250
-                                                # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
-                                                img = Image.new(
-                                                    'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
-                                                cloud_img = Image.open(
-                                                    './imagem/04.png').resize((lagurasoma, alturasoma))
-                                                # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
-                                                img.paste(
-                                                    cloud_img, (0, 0), mask=cloud_img)
-                                                # Cria um objeto de desenho para a imagem
-                                                draw = ImageDraw.Draw(
-                                                    img)
-                                                # Define as configurações de fonte e cor para o texto
-                                                font = ImageFont.truetype(
-                                                    'arial.ttf', 18)
-                                                # RGBA: preto opaco
-                                                text_color = (
-                                                    0, 0, 0, 255)
-                                                # Define o texto a ser exibido e a posição
-                                                window.Refresh()
-                                                text = textoa.capitalize()
-                                                limite = 95
-                                                atual = 1
-                                                novaString = ''
-                                                numerolinha = 1
-                                                for x in text:
-                                                    atual += 1
-                                                    if atual >= 95 and x == ' ':
-                                                        novaString = novaString + '\n'
-                                                        atual = 1
-                                                        numerolinha += 1
-                                                    else:
-                                                        novaString = novaString + x
-                                                print(alturas)
-                                                text_position = (
-                                                    275, 1)
-                                                monitor = 0
-                                                if alturas == 900:
-                                                    monitor = 8
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas == 800:
-                                                    monitor = 6
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas == 600:
-                                                    monitor = 0
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        100, 1)
-                                                elif alturas == 1080:
-                                                    monitor = 12
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas == 1440:
-                                                    monitor = 18
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas == 1200:
-                                                    monitor = 14
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas == 1600:
-                                                    monitor = 20
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas > 1600:
-                                                    monitor = 100
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        275, 1)
-                                                elif alturas < 600:
-                                                    monitor = 0
-                                                    if numerolinha > monitor:
-                                                        novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
-                                                    text_position = (
-                                                        100, 1)
-                                                # if numerolinha > monitor:
-                                                #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                # text_position = (
-                                                #     275, 1)
-                                                # Desenha o texto na imagem com fundo transparente
-                                                draw.text(
-                                                    text_position, novaString, font=font, fill=text_color)
-                                                # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
-                                                img_file = 'cloud_temp.png'
-                                                img.save(img_file)
-                                                window['textoteste'].update(
-                                                    img_file)
-                                                break
+                                                    loops += 1
                                         elif text == "O que você pode fazer":
                                             loop = 100
                                             engine = pyttsx3.init()
@@ -3164,10 +3389,170 @@ while True:
                                                             'voices')
                                                         engine.setProperty(
                                                             'voice', voices[0].id)
-                                                        texto = "Hoje é dia", dataCerta["dia"], " do ", dataCerta[
+                                                        texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
                                                             "mes"], " de ", dataCerta["ano"]
                                                         engine.say(texto)
                                                         engine.runAndWait()
+                                                        import tkinter as tk
+                                                        root = tk.Tk()
+                                                        root.withdraw()
+                                                        largura = root.winfo_screenwidth()
+                                                        altura = root.winfo_screenheight()
+                                                        larguras = int(largura)
+                                                        alturas = int(altura)
+                                                        alturasoma = alturas-300
+                                                        if alturasoma < 250:
+                                                            alturasoma = 250
+                                                        lagurasoma = larguras-300
+                                                        if lagurasoma < 250:
+                                                            lagurasoma = 250
+                                                        # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                        img = Image.new(
+                                                            'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                        cloud_img = Image.open(
+                                                            './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                        # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                        img.paste(
+                                                            cloud_img, (0, 0), mask=cloud_img)
+                                                        # Cria um objeto de desenho para a imagem
+                                                        draw = ImageDraw.Draw(
+                                                            img)
+                                                        # Define as configurações de fonte e cor para o texto
+                                                        font = ImageFont.truetype(
+                                                            'arial.ttf', 18)
+                                                        # RGBA: preto opaco
+                                                        text_color = (
+                                                            0, 0, 0, 255)
+                                                        # Define o texto a ser exibido e a posição
+                                                        window.Refresh()
+                                                        text = texto
+                                                        limite = 95
+                                                        atual = 1
+                                                        novaString = ''
+                                                        numerolinha = 1
+                                                        for x in text:
+                                                            atual += 1
+                                                            if atual >= 95 and x == ' ':
+                                                                novaString = novaString + '\n'
+                                                                atual = 1
+                                                                numerolinha += 1
+                                                            else:
+                                                                novaString = novaString + \
+                                                                    str(x)
+                                                        print(alturas)
+                                                        text_position = (
+                                                            275, 1)
+                                                        monitor = 0
+                                                        if alturas == 900 and larguras == 1600:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 50)
+                                                        elif alturas == 900 and larguras == 1440:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 40)
+                                                        elif alturas == 800 and larguras == 1280:
+                                                            monitor = 6
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                200, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 864 and larguras == 1152:
+                                                            monitor = 7
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                180, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 15)
+                                                        elif alturas == 600 and larguras == 800:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 1080:
+                                                            monitor = 12
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1440:
+                                                            monitor = 18
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1200:
+                                                            monitor = 14
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1600:
+                                                            monitor = 20
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas > 1600:
+                                                            monitor = 100
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 768 and larguras == 1024:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                155, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 768 and larguras == 1366:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 768 and larguras == 1360:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas < 600:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        # if numerolinha > monitor:
+                                                        #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                        # text_position = (
+                                                        #     275, 1)
+                                                        # Desenha o texto na imagem com fundo transparente
+                                                        draw.text(
+                                                            text_position, novaString, font=font, fill=text_color)
+                                                        # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                        img_file = 'cloud_temp.png'
+                                                        img.save(img_file)
+                                                        window['textoteste'].update(
+                                                            img_file)
                                                         break
 
                                                     elif "Tem" in text and "loja" in text or "se a" in text and "loja" in text or "Tem" in text and "othon" in text or "tem" in text and "loja" in text or "tem" in text and "othon" in text or "vende" in text and "othon" in text or "vende" in text and "loja" in text:
@@ -3568,6 +3953,166 @@ while True:
                                                         texto = resposta
                                                         engine.say(texto)
                                                         engine.runAndWait()
+                                                        import tkinter as tk
+                                                        root = tk.Tk()
+                                                        root.withdraw()
+                                                        largura = root.winfo_screenwidth()
+                                                        altura = root.winfo_screenheight()
+                                                        larguras = int(largura)
+                                                        alturas = int(altura)
+                                                        alturasoma = alturas-300
+                                                        if alturasoma < 250:
+                                                            alturasoma = 250
+                                                        lagurasoma = larguras-300
+                                                        if lagurasoma < 250:
+                                                            lagurasoma = 250
+                                                        # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                        img = Image.new(
+                                                            'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                        cloud_img = Image.open(
+                                                            './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                        # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                        img.paste(
+                                                            cloud_img, (0, 0), mask=cloud_img)
+                                                        # Cria um objeto de desenho para a imagem
+                                                        draw = ImageDraw.Draw(
+                                                            img)
+                                                        # Define as configurações de fonte e cor para o texto
+                                                        font = ImageFont.truetype(
+                                                            'arial.ttf', 18)
+                                                        # RGBA: preto opaco
+                                                        text_color = (
+                                                            0, 0, 0, 255)
+                                                        # Define o texto a ser exibido e a posição
+                                                        window.Refresh()
+                                                        text = texto
+                                                        limite = 95
+                                                        atual = 1
+                                                        novaString = ''
+                                                        numerolinha = 1
+                                                        for x in text:
+                                                            atual += 1
+                                                            if atual >= 95 and x == ' ':
+                                                                novaString = novaString + '\n'
+                                                                atual = 1
+                                                                numerolinha += 1
+                                                            else:
+                                                                novaString = novaString + \
+                                                                    str(x)
+                                                        print(alturas)
+                                                        text_position = (
+                                                            275, 1)
+                                                        monitor = 0
+                                                        if alturas == 900 and larguras == 1600:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 50)
+                                                        elif alturas == 900 and larguras == 1440:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 40)
+                                                        elif alturas == 800 and larguras == 1280:
+                                                            monitor = 6
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                200, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 864 and larguras == 1152:
+                                                            monitor = 7
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                180, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 15)
+                                                        elif alturas == 600 and larguras == 800:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 1080:
+                                                            monitor = 12
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1440:
+                                                            monitor = 18
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1200:
+                                                            monitor = 14
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1600:
+                                                            monitor = 20
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas > 1600:
+                                                            monitor = 100
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 768 and larguras == 1024:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                155, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 768 and larguras == 1366:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 768 and larguras == 1360:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas < 600:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        # if numerolinha > monitor:
+                                                        #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                        # text_position = (
+                                                        #     275, 1)
+                                                        # Desenha o texto na imagem com fundo transparente
+                                                        draw.text(
+                                                            text_position, novaString, font=font, fill=text_color)
+                                                        # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                        img_file = 'cloud_temp.png'
+                                                        img.save(img_file)
+                                                        window['textoteste'].update(
+                                                            img_file)
                                                         break
                                                     elif hora != 0:
 
@@ -3585,6 +4130,166 @@ while True:
                                                         texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
                                                         engine.say(texto)
                                                         engine.runAndWait()
+                                                        import tkinter as tk
+                                                        root = tk.Tk()
+                                                        root.withdraw()
+                                                        largura = root.winfo_screenwidth()
+                                                        altura = root.winfo_screenheight()
+                                                        larguras = int(largura)
+                                                        alturas = int(altura)
+                                                        alturasoma = alturas-300
+                                                        if alturasoma < 250:
+                                                            alturasoma = 250
+                                                        lagurasoma = larguras-300
+                                                        if lagurasoma < 250:
+                                                            lagurasoma = 250
+                                                        # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
+                                                        img = Image.new(
+                                                            'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
+                                                        cloud_img = Image.open(
+                                                            './imagem/04.png').resize((lagurasoma, alturasoma))
+                                                        # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
+                                                        img.paste(
+                                                            cloud_img, (0, 0), mask=cloud_img)
+                                                        # Cria um objeto de desenho para a imagem
+                                                        draw = ImageDraw.Draw(
+                                                            img)
+                                                        # Define as configurações de fonte e cor para o texto
+                                                        font = ImageFont.truetype(
+                                                            'arial.ttf', 18)
+                                                        # RGBA: preto opaco
+                                                        text_color = (
+                                                            0, 0, 0, 255)
+                                                        # Define o texto a ser exibido e a posição
+                                                        window.Refresh()
+                                                        text = texto
+                                                        limite = 95
+                                                        atual = 1
+                                                        novaString = ''
+                                                        numerolinha = 1
+                                                        for x in text:
+                                                            atual += 1
+                                                            if atual >= 95 and x == ' ':
+                                                                novaString = novaString + '\n'
+                                                                atual = 1
+                                                                numerolinha += 1
+                                                            else:
+                                                                novaString = novaString + \
+                                                                    str(x)
+                                                        print(alturas)
+                                                        text_position = (
+                                                            275, 1)
+                                                        monitor = 0
+                                                        if alturas == 900 and larguras == 1600:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 50)
+                                                        elif alturas == 900 and larguras == 1440:
+                                                            monitor = 8
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 40)
+                                                        elif alturas == 800 and larguras == 1280:
+                                                            monitor = 6
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                200, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 864 and larguras == 1152:
+                                                            monitor = 7
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                180, 50)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 15)
+                                                        elif alturas == 600 and larguras == 800:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 1080:
+                                                            monitor = 12
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1440:
+                                                            monitor = 18
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1200:
+                                                            monitor = 14
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 1600:
+                                                            monitor = 20
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas > 1600:
+                                                            monitor = 100
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                275, 1)
+                                                        elif alturas == 768 and larguras == 1024:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                155, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        elif alturas == 768 and larguras == 1366:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas == 768 and larguras == 1360:
+                                                            monitor = 5
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                250, 35)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 18)
+                                                        elif alturas < 600:
+                                                            monitor = 0
+                                                            if numerolinha > monitor:
+                                                                novaString = "\n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição \n nesta resolução"
+                                                            text_position = (
+                                                                100, 1)
+                                                            font = ImageFont.truetype(
+                                                                'arial.ttf', 13)
+                                                        # if numerolinha > monitor:
+                                                        #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
+                                                        # text_position = (
+                                                        #     275, 1)
+                                                        # Desenha o texto na imagem com fundo transparente
+                                                        draw.text(
+                                                            text_position, novaString, font=font, fill=text_color)
+                                                        # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
+                                                        img_file = 'cloud_temp.png'
+                                                        img.save(img_file)
+                                                        window['textoteste'].update(
+                                                            img_file)
                                                         break
 
                                                     elif respostaa == respostaaa and d[0] != "onde" and d[0] != "aonde":
@@ -4292,7 +4997,6 @@ while True:
                                                                 95, 35)
                                                             font = ImageFont.truetype(
                                                                 'arial.ttf', 12)
-
                                                         elif alturas > 1600:
                                                             monitor = 100
                                                             if numerolinha > monitor:
@@ -4364,7 +5068,6 @@ while True:
                                                         engine.say(texto)
                                                         engine.runAndWait()
                                                         window.Enable()
-
                                                         break
                                                         # if videoTexto =="vídeo" or videoTexto== "em vídeo":
                                                 elif audio[tratamentoErro] == "vídeo":
