@@ -101,7 +101,7 @@ while True:
             # draw.text(
             #     text_position, novaString, font=font, fill=text_color)
             # # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
-            img_file = './cloud_temp.png'
+            img_file = './imagem/cloud_temp.png'
             # img.save(img_file)
 
             font = ("Arial", 13)
@@ -146,7 +146,7 @@ while True:
                 else:
                         window.Refresh()
 
-                        img_file = './cloud_temp.png'
+                        img_file = './imagem/cloud_temp.png'
                         window['textoteste'].update(filename=img_file)
                         window.Refresh()
 
@@ -5120,7 +5120,7 @@ while True:
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
                                                             # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
-                                                            img_file = './cloud_temp.png'
+                                                            img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(filename=img_file)
 
