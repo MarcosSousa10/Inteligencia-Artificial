@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw, ImageFont
 image = './imagem/micro.png'
 env = print_env(['app_key'])
 # configura ambiente
-openai.api_key = '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'
+openai.api_key = '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'
 # mofel_engine
 model_engine = 'text-davinci-003'
 
@@ -172,7 +172,7 @@ while True:
                             engine.setProperty('pitch', 100)
                             engine.setProperty('volume', 0.9)
                             voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[0].id)
+                            engine.setProperty('voice', voices[2].id)
                             #   falar um texto com a voz de criança
                             texto = ""
                             engine.say(texto)
@@ -189,7 +189,7 @@ while True:
                             engine.setProperty('pitch', 100)
                             engine.setProperty('volume', 0.9)
                             voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[0].id)
+                            engine.setProperty('voice', voices[2].id)
                             #   falar um texto com a voz de criança
                             texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                 e)
@@ -197,8 +197,9 @@ while True:
                             engine.runAndWait()
                                          
                         window['textoteste'].update(filename=img_file)
-                        if text == 'potinho' or text == 'potinhos' or text == 'botinha' or text == "patinho" or text =="motinha":
+                        if text == 'potinho' or text == 'potinhos' or text == 'botinha' or text == "patinho" or text =="motinha" or text == "gatinho":
                             # inicializar o motor de sintetização de fala
+                            
                             engine = pyttsx3.init()
                             # ajustar as características da voz
                             # velocidade da voz (padrão = 200)
@@ -207,7 +208,7 @@ while True:
                             engine.setProperty('pitch', 100)
                             engine.setProperty('volume', 0.9)
                             voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[0].id)
+                            engine.setProperty('voice', voices[2].id)
                             #   falar um texto com a voz de criança
                             texto = "Oi eu sou o Otinho como posso te ajudar" 
                             engine.say(texto)
@@ -233,7 +234,7 @@ while True:
                                 engine.setProperty('pitch', 100)
                                 engine.setProperty('volume', 0.9)
                                 voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[0].id)
+                                engine.setProperty('voice', voices[2].id)
                                 #   falar um texto com a voz de criança
                                 texto = "Não foi possível entender o áudio"
                                 engine.say(texto)
@@ -250,7 +251,7 @@ while True:
                                 engine.setProperty('pitch', 100)
                                 engine.setProperty('volume', 0.9)
                                 voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[0].id)
+                                engine.setProperty('voice', voices[2].id)
                                 #   falar um texto com a voz de criança
                                 texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                     e)
@@ -268,7 +269,7 @@ while True:
                                 engine.setProperty('pitch', 100)
                                 engine.setProperty('volume', 0.9)
                                 voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[0].id)
+                                engine.setProperty('voice', voices[2].id)
                                 #   falar um texto com a voz de criança
                                 texto = "Desculpe eu devo ter entendido errado!"
                                 engine.say(texto)
@@ -284,7 +285,7 @@ while True:
                                 engine.setProperty('pitch', 100)
                                 engine.setProperty('volume', 0.9)
                                 voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[0].id)
+                                engine.setProperty('voice', voices[2].id)
                                 #   falar um texto com a voz de criança
                                 texto = "Você falou {0}, está correto?".format(
                                     text)
@@ -311,7 +312,7 @@ while True:
                                     engine.setProperty('pitch', 100)
                                     engine.setProperty('volume', 0.9)
                                     voices = engine.getProperty('voices')
-                                    engine.setProperty('voice', voices[0].id)
+                                    engine.setProperty('voice', voices[2].id)
                                     #   falar um texto com a voz de criança
                                     texto = "Não foi possível entender o áudio"
                                     engine.say(texto)
@@ -327,7 +328,7 @@ while True:
                                     engine.setProperty('pitch', 100)
                                     engine.setProperty('volume', 0.9)
                                     voices = engine.getProperty('voices')
-                                    engine.setProperty('voice', voices[0].id)
+                                    engine.setProperty('voice', voices[2].id)
                                     #   falar um texto com a voz de criança
                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                         e)
@@ -350,7 +351,7 @@ while True:
                                         engine.setProperty('pitch', 100)
                                         engine.setProperty('volume', 0.9)
                                         voices = engine.getProperty('voices')
-                                        engine.setProperty('voice', voices[0].id)
+                                        engine.setProperty('voice', voices[2].id)
                                         texto = "Desculpe eu devo ter entendido errado!"
                                         engine.say(texto)
                                         engine.runAndWait()
@@ -371,7 +372,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Por favor seje mais especifico na sua pergunta! oque você quer saber sobre {}".format(
                                                     palavras)
                                                 engine.say(texto)
@@ -388,7 +389,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 textoa = " Para facilitar o seu entendimento vamos fazer um passo a passo juntos. Por favor escolha um tema, entre perguntas relacionada a Othon de Carvalho e perguntas aleatorias sobre coisas diversas"
                                                 engine.say(textoa)
                                                 engine.runAndWait()
@@ -570,7 +571,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -584,7 +585,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -606,7 +607,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "Agora Basta Fazer sua Pergunta!"
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -629,7 +630,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Não foi possível entender o áudio"
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -644,7 +645,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                                     e)
                                                                 engine.say(texto)
@@ -755,7 +756,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 import tkinter as tk
                                                                 root = tk.Tk()
                                                                 root.withdraw()
@@ -934,7 +935,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Irei listar os produtos com seus devidos preços, somente para a região 1 :"
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -1137,7 +1138,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Para validar estoque, consulte um vendedor!"
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -1154,7 +1155,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
 
                                                                 import tkinter as tk
                                                                 root = tk.Tk()
@@ -1498,7 +1499,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = x
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -1526,7 +1527,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 falar = descricao.split()
                                                                 my_string = falar[0]
                                                                 last_letter = my_string[-1]
@@ -1709,7 +1710,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Desculpe, Não entendi oque você falou, Ou a resposta não foi cadastrada neste tema!"
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -1727,7 +1728,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "Você pode escolher se a resposta da sua pergunta será em vídeo ou em áudio?"
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -1751,7 +1752,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Não foi possível entender o áudio"
                                                                 engine.say(texto)
                                                                 engine.runAndWait()
@@ -1767,7 +1768,7 @@ while True:
                                                                 voices = engine.getProperty(
                                                                     'voices')
                                                                 engine.setProperty(
-                                                                    'voice', voices[0].id)
+                                                                    'voice', voices[2].id)
                                                                 texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                                     e)
                                                                 engine.say(texto)
@@ -1791,7 +1792,7 @@ while True:
                                                                     voices = engine.getProperty(
                                                                         'voices')
                                                                     engine.setProperty(
-                                                                        'voice', voices[0].id)
+                                                                        'voice', voices[2].id)
                                                                     texto = "Agora Basta Fazer sua Pergunta!"
                                                                     engine.say(
                                                                         texto)
@@ -1826,7 +1827,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "Não foi possível entender o áudio "
                                                                         engine.say(
                                                                             texto)
@@ -1843,7 +1844,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                                             e)
                                                                         engine.say(
@@ -1878,7 +1879,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
                                                                             "mes"], " de ", dataCerta["ano"]
                                                                         engine.say(
@@ -2062,7 +2063,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
                                                                         engine.say(
                                                                             texto)
@@ -2454,7 +2455,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = response
                                                                         engine.say(
                                                                             texto)
@@ -2476,7 +2477,7 @@ while True:
                                                                     voices = engine.getProperty(
                                                                         'voices')
                                                                     engine.setProperty(
-                                                                        'voice', voices[0].id)
+                                                                        'voice', voices[2].id)
                                                                     texto = "Agora Basta Fazer sua Pergunta!"
                                                                     engine.say(
                                                                         texto)
@@ -2500,7 +2501,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "Não foi possível entender o áudio"
                                                                         engine.say(
                                                                             texto)
@@ -2516,7 +2517,7 @@ while True:
                                                                         voices = engine.getProperty(
                                                                             'voices')
                                                                         engine.setProperty(
-                                                                            'voice', voices[0].id)
+                                                                            'voice', voices[2].id)
                                                                         texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                                             e)
                                                                         engine.say(
@@ -2556,7 +2557,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 textoa = "\n \n Eu posso responder qualquer tipo de pergunta , enviar e-mail, posso ser usada para realizar tarefas complexas, como interpretar dados, tomar decisões, aprender e adquirir conhecimentos. posso ser usada para criar sistemas que possam responder a comandos e realizar tarefas com autonomia"
                                                 engine.say(textoa)
                                                 engine.runAndWait()
@@ -2689,7 +2690,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Oi Tudo Bem?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -2704,7 +2705,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Oi Tudo Bem ? Qual é o e-mail do destinatario?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -2728,7 +2729,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -2742,7 +2743,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -2754,7 +2755,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Qual é o assunto do E-mail?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -2777,7 +2778,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -2791,7 +2792,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -2803,7 +2804,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Qual é o Corpo do e-mail?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -2826,7 +2827,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -2840,7 +2841,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -2874,7 +2875,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "E-MAIL ENVIADO COM SUCESSO!"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3005,7 +3006,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível enviar o e-mail"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3019,7 +3020,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Oi Tudo Bem ? Qual é o tema da reclamação?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -3043,7 +3044,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3057,7 +3058,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -3069,7 +3070,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 engine.say(texto)
                                                 engine.runAndWait()
                                                 r = sr.Recognizer()
@@ -3091,7 +3092,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3105,7 +3106,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -3247,7 +3248,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "RECLAMAÇÃO ENVIADA COM SUCESSO!"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3261,7 +3262,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível enviar a reclamação!"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3297,7 +3298,7 @@ while True:
                                                 voices = engine.getProperty(
                                                     'voices')
                                                 engine.setProperty(
-                                                    'voice', voices[0].id)
+                                                    'voice', voices[2].id)
                                                 texto = "Você gostaria da sua resposta em vídeo ou em áudio?"
                                                 engine.say(texto)
                                                 engine.runAndWait()
@@ -3319,7 +3320,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível entender o áudio"
                                                     engine.say(texto)
                                                     engine.runAndWait()
@@ -3334,7 +3335,7 @@ while True:
                                                     voices = engine.getProperty(
                                                         'voices')
                                                     engine.setProperty(
-                                                        'voice', voices[0].id)
+                                                        'voice', voices[2].id)
                                                     texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
                                                         e)
                                                     engine.say(texto)
@@ -3465,7 +3466,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
                                                                 "mes"], " de ", dataCerta["ano"]
                                                             engine.say(texto)
@@ -3644,7 +3645,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "Irei listar os produtos com seus devidos preços, somente para a região 1 :"
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -3845,7 +3846,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "Para validar estoque, consulte um vendedor!"
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -3865,7 +3866,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
 
                                                             import tkinter as tk
                                                             root = tk.Tk()
@@ -4203,7 +4204,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -4381,7 +4382,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
 
                                                             import tkinter as tk
                                                             root = tk.Tk()
@@ -4721,7 +4722,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = text
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -4750,7 +4751,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             try:
                                                                 falar = descricao.split()
                                                             except:
@@ -5139,7 +5140,7 @@ while True:
                                                             voices = engine.getProperty(
                                                                 'voices')
                                                             engine.setProperty(
-                                                                'voice', voices[0].id)
+                                                                'voice', voices[2].id)
                                                             texto = response
                                                             engine.say(texto)
                                                             engine.runAndWait()
@@ -5199,7 +5200,7 @@ while True:
                                         engine.setProperty('pitch', 100)
                                         engine.setProperty('volume', 0.9)
                                         voices = engine.getProperty('voices')
-                                        engine.setProperty('voice', voices[0].id)
+                                        engine.setProperty('voice', voices[2].id)
                                         texto = ""
                                         engine.say(texto)
                                         engine.runAndWait()
@@ -5211,7 +5212,7 @@ while True:
                                 engine.setProperty('pitch', 100)
                                 engine.setProperty('volume', 0.9)
                                 voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[0].id)
+                                engine.setProperty('voice', voices[2].id)
                                 texto = ""
                                 engine.say(texto)
                                 engine.runAndWait()
