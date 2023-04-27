@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw, ImageFont
 image = './imagem/micro.png'
 env = print_env(['app_key'])
 # configura ambiente
-openai.api_key = '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'
+openai.api_key = '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'
 # mofel_engine
 model_engine = 'text-davinci-003'
 
