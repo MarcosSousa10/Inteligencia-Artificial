@@ -14,22 +14,75 @@ from tkinter import *
 from collections import Counter
 import PySimpleGUI as sg
 from PIL import Image, ImageDraw, ImageFont
-# pip install https://github.com/pyinstaller/pyinstaller/archive/refs/heads/develop.zip
-# recurso tecnico
 
+
+def ouvir_microfone():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source) 
+    try:
+            text = r.recognize_google(audio, language='pt-BR')
+            window['textoteste'].update(filename=img_file)
+            window['senha'].update(text.capitalize() + "?")
+            print (text)
+            return text
+        
+    except sr.UnknownValueError:
+        # exibe uma mensagem de erro se não foi possível entender o áudio
+        # inicializar o motor de sintetização de fala
+        engine = pyttsx3.init()
+        # ajustar as características da voz
+        # velocidade da voz (padrão = 200)
+        engine.setProperty('rate', 200)
+        # tom da voz (padrão = 50)
+        engine.setProperty('pitch', 100)
+        engine.setProperty('volume', 0.9)
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[2].id)
+        #   falar um texto com a voz de criança
+        texto = ""
+        engine.say(texto)
+        engine.runAndWait()
+    except sr.RequestError as e:
+        # exibe uma mensagem de erro se não foi possível entender o áudio
+        # inicializar o motor de sintetização de fala
+        engine = pyttsx3.init()
+        # ajustar as características da voz
+        # velocidade da voz (padrão = 200)
+        engine.setProperty('rate', 200)
+        # tom da voz (padrão = 50)
+        engine.setProperty('pitch', 100)
+        engine.setProperty('volume', 0.9)
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[2].id)
+        #   falar um texto com a voz de criança
+        texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+            e)
+        engine.say(texto)
+        engine.runAndWait()
+def mensagemOla(textos):
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 200)
+    engine.setProperty('pitch', 100)
+    engine.setProperty('volume', 0.9)
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[2].id)
+    texto = textos
+    engine.say(texto)
+    return{        
+        engine.runAndWait()
+        }
+    
 image = './imagem/micro.png'
 env = print_env(['app_key'])
 # configura ambiente
-openai.api_key = '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'
+openai.api_key = 'dfsfsfsfsf'
 # mofel_engine
 model_engine = 'text-davinci-003'
 
 imagemPrincipal = './imagem/othon.png'
 sg.theme('DarkTeal8')
-# layout = [[sg.Text('Othon de carvalho')],
-#           [sg.ReadFormButton('O', button_color=sg.TRANSPARENT_BUTTON,
-#                        image_filename=imagemPrincipal, image_size=(None, None), image_subsample=2, border_width=0 )],
-#           ]
+
 layout = [[sg.Button(key='O', button_color=(sg.theme_background_color()), border_width=10, mouseover_colors=('white', 'blue'),
                      use_ttk_buttons=False, pad=(0, 0), image_filename=imagemPrincipal, image_size=(None, None), size=(None, None),
                      expand_x=True, expand_y=True)]]
@@ -48,61 +101,11 @@ while True:
         if event == 'O':
             def border(elem):
                 return sg.Frame('', [[elem]], background_color='red')
-
             # Fecha a janela atual
             window1.close()
             sg.theme('LightBlue')
-
-            # import tkinter as tk
-            # root = tk.Tk()
-            # root.withdraw()
-            # largura = root.winfo_screenwidth()
-            # altura = root.winfo_screenheight()
-            # larguras = int(largura)
-            # alturas = int(altura)
-            # alturasoma = alturas-300
-            # if alturasoma < 250:
-            #     alturasoma = 250
-            # lagurasoma = larguras-300
-            # if lagurasoma < 250:
-            #     lagurasoma = 250
-            # # sg.popup(f"Largura do monitor: {largura}\nAltura do monitor: {altura}")
-            # img = Image.new(
-            #     'RGBA', (lagurasoma, alturasoma), (0, 0, 0, 0))
-            # cloud_img = Image.open(
-            #     './imagem/04.png').resize((lagurasoma, alturasoma))
-            # # Copia a imagem da nuvem de conversa para a imagem com fundo transparente
-            # img.paste(
-            #     cloud_img, (0, 0), mask=cloud_img)
-            # # Cria um objeto de desenho para a imagem
-            # draw = ImageDraw.Draw(
-            #     img)
-            # # Define as configurações de fonte e cor para o texto
-            # font = ImageFont.truetype(
-            #     'arial.ttf', 20)
-            # # RGBA: preto opaco
-            # text_color = (
-            #     0, 0, 0, 255)
-            # # Define o texto a ser exibido e a posição
-
             text = ""
-            # limite = 100
-            # atual = 1
-            # novaString = ''
-            # for x in text:
-            #     atual += 1
-            #     if atual >= 70 and x == ' ':
-            #         novaString = novaString + '\n'
-            #         atual = 1
-            #     else:
-            #         novaString = novaString + x
-            # text_position = (40, 1)
-            # # Desenha o texto na imagem com fundo transparente
-            # draw.text(
-            #     text_position, novaString, font=font, fill=text_color)
-            # # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
             img_file = './imagem/cloud_temp.png'
-            # img.save(img_file)
 
             font = ("Arial", 13)
             layout = [
@@ -110,16 +113,8 @@ while True:
                           expand_x=True, pad=(0, 0))],
 
                 [sg.Image(filename=img_file, key='textoteste', expand_x=True,
-                             expand_y=True, size=(None, None))]
-
-                
+                             expand_y=True, size=(None, None))]  
             ]
-            
-            # r = sr.Recognizer()
-            # with sr.Microphone() as source:
-            #     audio = r.listen(source) 
-            #     text = r.recognize_google(audio, language='pt-BR')
-            #     if text == "Bom dia" or text == "Boa tarde" or text == "Boa noite" :
             window = sg.Window('Inteligencia Artificial', layout=layout, location=(0, 0),
                        element_justification='c', resizable=True, use_default_focus=False, size=(sg.Window.get_screen_size()), finalize=True)
             window.set_min_size((1200, 800))
@@ -129,91 +124,18 @@ while True:
                 window.Refresh()
                 if event == sg.WIN_CLOSED:
                     break
-# import speech_recognition as sr
-
-# def ouvir_microfone():
-#     r = sr.Recognizer()
-#     with sr.Microphone() as source:
-#         print("Diga alguma coisa!")
-#         r.adjust_for_ambient_noise(source, duration=1)
-#         audio = r.listen(source)
-#         try:
-#             texto = r.recognize_google(audio, language='pt-BR')
-#             return texto
-#         except:
-#             return None
-                    
                 else:
                         window.Refresh()
-
                         img_file = './imagem/cloud_temp.png'
                         window['textoteste'].update(filename=img_file)
                         window.Refresh()
-
-                        r = sr.Recognizer()
-          
-                        with sr.Microphone() as source:
-                            audio = r.listen(source) 
-                        try:
-                            text = r.recognize_google(audio, language='pt-BR')
-
-                            window['textoteste'].update(filename=img_file)
-                            window['senha'].update(text.capitalize() + "?")
-                            
-
-                        except sr.UnknownValueError:
-                            # exibe uma mensagem de erro se não foi possível entender o áudio
-                            # inicializar o motor de sintetização de fala
-                            engine = pyttsx3.init()
-                            # ajustar as características da voz
-                            # velocidade da voz (padrão = 200)
-                            engine.setProperty('rate', 200)
-                            # tom da voz (padrão = 50)
-                            engine.setProperty('pitch', 100)
-                            engine.setProperty('volume', 0.9)
-                            voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[2].id)
-                            #   falar um texto com a voz de criança
-                            texto = ""
-                            engine.say(texto)
-                            engine.runAndWait()
-
-                        except sr.RequestError as e:
-                            # exibe uma mensagem de erro se não foi possível entender o áudio
-                            # inicializar o motor de sintetização de fala
-                            engine = pyttsx3.init()
-                            # ajustar as características da voz
-                            # velocidade da voz (padrão = 200)
-                            engine.setProperty('rate', 200)
-                            # tom da voz (padrão = 50)
-                            engine.setProperty('pitch', 100)
-                            engine.setProperty('volume', 0.9)
-                            voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[2].id)
-                            #   falar um texto com a voz de criança
-                            texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                e)
-                            engine.say(texto)
-                            engine.runAndWait()
-                                         
                         window['textoteste'].update(filename=img_file)
+                        text = ouvir_microfone() 
                         if text == 'potinho' or text == 'potinhos' or text == 'botinha' or text == "patinho" or text =="motinha" or text == "gatinho":
                             # inicializar o motor de sintetização de fala
+                            mensagemOla("Oi eu sou o Otinho como posso te ajudar")
                             
-                            engine = pyttsx3.init()
-                            # ajustar as características da voz
-                            # velocidade da voz (padrão = 200)
-                            engine.setProperty('rate', 200)
-                            # tom da voz (padrão = 50)
-                            engine.setProperty('pitch', 100)
-                            engine.setProperty('volume', 0.9)
-                            voices = engine.getProperty('voices')
-                            engine.setProperty('voice', voices[2].id)
-                            #   falar um texto com a voz de criança
-                            texto = "Oi eu sou o Otinho como posso te ajudar" 
-                            engine.say(texto)
-                            engine.runAndWait() 
-                            text = ""
+                            text=""
                             window.Disable()
                             # cria um objeto Recognizer
                             r = sr.Recognizer()
@@ -224,73 +146,15 @@ while True:
                                 text = r.recognize_google(audio, language='pt-BR')
                                 window['senha'].update(text.capitalize() + "?")
                             except sr.UnknownValueError:
-                           
-                                # inicializar o motor de sintetização de fala
-                                engine = pyttsx3.init()
-                                # ajustar as características da voz
-                                # velocidade da voz (padrão = 200)
-                                engine.setProperty('rate', 200)
-                                # tom da voz (padrão = 50)
-                                engine.setProperty('pitch', 100)
-                                engine.setProperty('volume', 0.9)
-                                voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[2].id)
-                                #   falar um texto com a voz de criança
-                                texto = "Não foi possível entender o áudio"
-                                engine.say(texto)
-                                engine.runAndWait()
-
+                                mensagemOla("Não foi possível entender o áudio")
                             except sr.RequestError as e:
-                                # exibe uma mensagem de erro se não foi possível entender o áudio
-                                # inicializar o motor de sintetização de fala
-                                engine = pyttsx3.init()
-                                # ajustar as características da voz
-                                # velocidade da voz (padrão = 200)
-                                engine.setProperty('rate', 200)
-                                # tom da voz (padrão = 50)
-                                engine.setProperty('pitch', 100)
-                                engine.setProperty('volume', 0.9)
-                                voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[2].id)
-                                #   falar um texto com a voz de criança
-                                texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                    e)
-                                engine.say(texto)
-                                engine.runAndWait()
-                               
+                                mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                    e))
                             if len(text) < 2:
-                                # exibe uma mensagem de erro se não foi possível entender o áudio
-                                # inicializar o motor de sintetização de fala
-                                engine = pyttsx3.init()
-                                # ajustar as características da voz
-                                # velocidade da voz (padrão = 200)
-                                engine.setProperty('rate', 200)
-                                # tom da voz (padrão = 50)
-                                engine.setProperty('pitch', 100)
-                                engine.setProperty('volume', 0.9)
-                                voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[2].id)
-                                #   falar um texto com a voz de criança
-                                texto = "Desculpe eu devo ter entendido errado!"
-                                engine.say(texto)
-                                engine.runAndWait()
+                                mensagemOla("Desculpe eu devo ter entendido errado!")
                             else:
-                                # exibe uma mensagem de erro se não foi possível entender o áudio
-                                # inicializar o motor de sintetização de fala
-                                engine = pyttsx3.init()
-                                # ajustar as características da voz
-                                # velocidade da voz (padrão = 200)
-                                engine.setProperty('rate', 200)
-                                # tom da voz (padrão = 50)
-                                engine.setProperty('pitch', 100)
-                                engine.setProperty('volume', 0.9)
-                                voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[2].id)
-                                #   falar um texto com a voz de criança
-                                texto = "Você falou {0}, está correto?".format(
-                                    text)
-                                engine.say(texto)
-                                engine.runAndWait()
+                                mensagemOla("Você falou {0}, está correto?".format(
+                                    text))
                                 # cria um objeto Recognizer
                                 r = sr.Recognizer()
                                 # abre o microfone e grava o áudio
@@ -302,38 +166,10 @@ while True:
                                     certo = r.recognize_google(
                                         audio, language='pt-BR')
                                 except sr.UnknownValueError:
-                                    # exibe uma mensagem de erro se não foi possível entender o áudio
-                                    # inicializar o motor de sintetização de fala
-                                    engine = pyttsx3.init()
-                                    # ajustar as características da voz
-                                    # velocidade da voz (padrão = 200)
-                                    engine.setProperty('rate', 200)
-                                    # tom da voz (padrão = 50)
-                                    engine.setProperty('pitch', 100)
-                                    engine.setProperty('volume', 0.9)
-                                    voices = engine.getProperty('voices')
-                                    engine.setProperty('voice', voices[2].id)
-                                    #   falar um texto com a voz de criança
-                                    texto = "Não foi possível entender o áudio"
-                                    engine.say(texto)
-                                    engine.runAndWait()
+                                    mensagemOla("Não foi possível entender o áudio")
                                 except sr.RequestError as e:
-                                    # exibe uma mensagem de erro se não foi possível entender o áudio
-                                    # inicializar o motor de sintetização de fala
-                                    engine = pyttsx3.init()
-                                    # ajustar as características da voz
-                                    # velocidade da voz (padrão = 200)
-                                    engine.setProperty('rate', 200)
-                                    # tom da voz (padrão = 50)
-                                    engine.setProperty('pitch', 100)
-                                    engine.setProperty('volume', 0.9)
-                                    voices = engine.getProperty('voices')
-                                    engine.setProperty('voice', voices[2].id)
-                                    #   falar um texto com a voz de criança
-                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                        e)
-                                    engine.say(texto)
-                                    engine.runAndWait()
+                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                    e))
                                 txto = certo
                                 palavra = len(txto.split())
                                 palavras = txto.split()
@@ -341,21 +177,7 @@ while True:
                                 while simNao < palavra:
                                     if palavras[simNao] == "não" or palavras[simNao] == "incorreto" or palavras[simNao] == "errado":
                                         simNao = 100
-                                        # exibe uma mensagem de erro se não foi possível entender o áudio
-                                        # inicializar o motor de sintetização de fala
-                                        engine = pyttsx3.init()
-                                        # ajustar as características da voz
-                                        # velocidade da voz (padrão = 200)
-                                        engine.setProperty('rate', 200)
-                                        # tom da voz (padrão = 50)
-                                        engine.setProperty('pitch', 100)
-                                        engine.setProperty('volume', 0.9)
-                                        voices = engine.getProperty('voices')
-                                        engine.setProperty('voice', voices[2].id)
-                                        texto = "Desculpe eu devo ter entendido errado!"
-                                        engine.say(texto)
-                                        engine.runAndWait()
-
+                                        mensagemOla("Desculpe eu devo ter entendido errado!")
                                     elif len(text) > 1 and palavras[simNao] == "sim" or len(text) > 1 and palavras[simNao] == "correto" or len(text) > 1 and palavras[simNao] == "certo" or len(text) > 1 and palavras[simNao] == "está":
                                         simNao = 100
                                         txto = text
@@ -365,34 +187,15 @@ while True:
                                         while loop < palavra:
                                             if palavra == 1 and palavras[0] != "Oi" and palavras[0] != "Olá" and palavras[0] != "e-mail" and palavras[0] != "reclamação":
                                                 loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Por favor seje mais especifico na sua pergunta! oque você quer saber sobre {}".format(
-                                                    palavras)
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                mensagemOla("Por favor seje mais especifico na sua pergunta! oque você quer saber sobre {}".format(
+                                                    palavras))
+                                            
                                                 break
 
                                             elif "ajude" in text and "você" in text or "ajuda" in text and "você" in text or "como" in text and "você" in text or "usar" in text and "te" in text:
                                                 loop = 100
                                                 window.Disable()
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                textoa = " Para facilitar o seu entendimento vamos fazer um passo a passo juntos. Por favor escolha um tema, entre perguntas relacionada a Othon de Carvalho e perguntas aleatorias sobre coisas diversas"
-                                                engine.say(textoa)
-                                                engine.runAndWait()
+                                                mensagemOla(" Para facilitar o seu entendimento vamos fazer um passo a passo juntos. Por favor escolha um tema, entre perguntas relacionada a Othon de Carvalho e perguntas aleatorias sobre coisas diversas")
                                                 import tkinter as tk
                                                 root = tk.Tk()
                                                 root.withdraw()
@@ -562,34 +365,10 @@ while True:
                                                     window['senha'].update(
                                                         escolha.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
                                                 if len(escolha) > 5:
                                                     txto = escolha
                                                     palavra = len(txto.split())
@@ -597,20 +376,7 @@ while True:
                                                     loops = 0
                                                     while loops < palavra:
                                                         if palavras1[loops] == "relacionada" or palavras1[loops] == "Othon de Carvalho" or palavras1[loops] == "othon" or palavras1[loops] == "carvalho" or palavras1[loops] == "Carvalho" or palavras1[loops] == "Othon":
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "Agora Basta Fazer sua Pergunta!"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("Agora Basta Fazer sua Pergunta!")
                                                             r = sr.Recognizer()
                                                             with sr.Microphone() as source:
                                                                 audio = r.listen(
@@ -620,36 +386,10 @@ while True:
                                                                 perguntaburro = r.recognize_google(
                                                                     audio, language='pt-BR')
                                                             except sr.UnknownValueError:
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Não foi possível entender o áudio"
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Não foi possível entender o áudio")
                                                             except sr.RequestError as e:
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                    e)
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                    e))
                                                             valoroutro = perguntaburro.lower()
                                                             bs = valoroutro
                                                             # [:-1]
@@ -925,20 +665,7 @@ while True:
                                                                 break
                                                             elif "Tem" in perguntaburro and "loja" in perguntaburro or "se a" in perguntaburro and "loja" in perguntaburro or "Tem" in perguntaburro and "othon" in perguntaburro or "tem" in perguntaburro and "loja" in perguntaburro or "tem" in perguntaburro and "othon" in perguntaburro or "vende" in perguntaburro and "othon" in perguntaburro or "vende" in perguntaburro and "loja" in perguntaburro:
                                                                 loop = 100
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Irei listar os produtos com seus devidos preços, somente para a região 1 :"
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Irei listar os produtos com seus devidos preços, somente para a região 1 :")
                                                                 i = 0
                                                                 primeiro = json.loads(
                                                                     materialloja.text)
@@ -1127,21 +854,8 @@ while True:
                                                                     i += 1
                                                                 sg.popup(
                                                                     textoc, location=(50, 50))
-
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Para validar estoque, consulte um vendedor!"
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Para validar estoque, consulte um vendedor!")
+                                                               
 
                                                             elif respostaa == respostaaa and d[0] != "onde" and d[0] != "aonde":
                                                                 resposta = respostaaa
@@ -1488,21 +1202,7 @@ while True:
                                                                 img.save(img_file)
                                                                 window['textoteste'].update(
                                                                     img_file)
-
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = x
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla(x)
                                                                 break
                                                             elif z.status_code == 200:
                                                                 print("Entrou")
@@ -1700,38 +1400,12 @@ while True:
                                                                 engine.runAndWait()
                                                                 break
                                                             else:
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Desculpe, Não entendi oque você falou, Ou a resposta não foi cadastrada neste tema!"
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Desculpe, Não entendi oque você falou, Ou a resposta não foi cadastrada neste tema!")
                                                                 window.Enable()
                                                             break
                                                         elif palavras1[loops] == "aleatorias" or palavras1[loops] == "diversas" or palavras1[loops] == "diversa" or palavras1[loops] == "aleatorio" or palavras1[loops] == "aleatoria":
                                                             loops = 10
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "Você pode escolher se a resposta da sua pergunta será em vídeo ou em áudio?"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("Você pode escolher se a resposta da sua pergunta será em vídeo ou em áudio?")
                                                             r = sr.Recognizer()
                                                             with sr.Microphone() as source:
                                                                 audio = r.listen(
@@ -1742,39 +1416,12 @@ while True:
                                                                     audio, language='pt-BR')
 
                                                             except sr.UnknownValueError:
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Não foi possível entender o áudio"
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Não foi possível entender o áudio")
                                                                 break
                                                             except sr.RequestError as e:
-                                                                engine = pyttsx3.init()
-                                                                engine.setProperty(
-                                                                    'rate', 200)
-                                                                engine.setProperty(
-                                                                    'pitch', 100)
-                                                                engine.setProperty(
-                                                                    'volume', 0.9)
-                                                                voices = engine.getProperty(
-                                                                    'voices')
-                                                                engine.setProperty(
-                                                                    'voice', voices[2].id)
-                                                                texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                    e)
-                                                                engine.say(texto)
-                                                                engine.runAndWait()
+                                                                mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                    e))
                                                                 break
-
                                                             audio = text.split()
                                                             tamanhoAudio = len(
                                                                 audio)
@@ -1782,21 +1429,7 @@ while True:
                                                             while tratamentoErros < tamanhoAudio:
                                                                 if audio[tratamentoErros] == 'áudio':
                                                                     tratamentoErros = 10
-                                                                    engine = pyttsx3.init()
-                                                                    engine.setProperty(
-                                                                        'rate', 200)
-                                                                    engine.setProperty(
-                                                                        'pitch', 100)
-                                                                    engine.setProperty(
-                                                                        'volume', 0.9)
-                                                                    voices = engine.getProperty(
-                                                                        'voices')
-                                                                    engine.setProperty(
-                                                                        'voice', voices[2].id)
-                                                                    texto = "Agora Basta Fazer sua Pergunta!"
-                                                                    engine.say(
-                                                                        texto)
-                                                                    engine.runAndWait()
+                                                                    mensagemOla("Agora Basta Fazer sua Pergunta!")
                                                                     r = sr.Recognizer()
                                                                     with sr.Microphone() as source:
                                                                         audio = r.listen(
@@ -1817,39 +1450,11 @@ while True:
                                                                         horadata = 0
                                                                         hora = 0
                                                                     except sr.UnknownValueError:
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "Não foi possível entender o áudio "
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla("Não foi possível entender o áudio ")
                                                                         break
                                                                     except sr.RequestError as e:
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                            e)
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                            e))
                                                                         break
                                                                     while horadata < c:
                                                                         if d[horadata] == "horas":
@@ -1868,23 +1473,8 @@ while True:
                                                                                 data)
                                                                         datas += 1
                                                                     if data != 0:
-
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
-                                                                            "mes"], " de ", dataCerta["ano"]
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla("Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
+                                                                            "mes"], " de ", dataCerta["ano"])
                                                                         import tkinter as tk
                                                                         root = tk.Tk()
                                                                         root.withdraw()
@@ -2052,22 +1642,7 @@ while True:
                                                                         break
 
                                                                     elif hora != 0:
-
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla("São ", horas["hour"], " Horas ", horas["minute"], " Minutos")
                                                                         import tkinter as tk
                                                                         root = tk.Tk()
                                                                         root.withdraw()
@@ -2439,49 +2014,13 @@ while True:
                                                                             img_file)
                                                                         window['textoteste'].update(
                                                                             img_file)
-
-                                                                        # Cria a interface gráfica do usuário com o campo de entrada editável na imagem
-
-                                                                        #   [sg.InputText(key='-INPUT-', size=(50, 1))],
-                                                                        #   [sg.Button('Enviar')]]
-
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = response
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla(response)
                                                                         window.Enable()
-
                                                                         break
-                                                                        # if videoTexto =="vídeo" or videoTexto== "em vídeo":
                                                                     break
                                                                 elif audio[tratamentoErros] == 'vídeo':
                                                                     tratamentoErros = 10
-                                                                    engine = pyttsx3.init()
-                                                                    engine.setProperty(
-                                                                        'rate', 200)
-                                                                    engine.setProperty(
-                                                                        'pitch', 100)
-                                                                    engine.setProperty(
-                                                                        'volume', 0.9)
-                                                                    voices = engine.getProperty(
-                                                                        'voices')
-                                                                    engine.setProperty(
-                                                                        'voice', voices[2].id)
-                                                                    texto = "Agora Basta Fazer sua Pergunta!"
-                                                                    engine.say(
-                                                                        texto)
-                                                                    engine.runAndWait()
+                                                                    mensagemOla("Agora Basta Fazer sua Pergunta!")
                                                                     r = sr.Recognizer()
                                                                     with sr.Microphone() as source:
                                                                         audio = r.listen(
@@ -2491,39 +2030,10 @@ while True:
                                                                         perguntaburrovideo = r.recognize_google(
                                                                             audio, language='pt-BR')
                                                                     except sr.UnknownValueError:
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "Não foi possível entender o áudio"
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
+                                                                        mensagemOla("Não foi possível entender o áudio")
                                                                     except sr.RequestError as e:
-                                                                        engine = pyttsx3.init()
-                                                                        engine.setProperty(
-                                                                            'rate', 200)
-                                                                        engine.setProperty(
-                                                                            'pitch', 100)
-                                                                        engine.setProperty(
-                                                                            'volume', 0.9)
-                                                                        voices = engine.getProperty(
-                                                                            'voices')
-                                                                        engine.setProperty(
-                                                                            'voice', voices[2].id)
-                                                                        texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                                            e)
-                                                                        engine.say(
-                                                                            texto)
-                                                                        engine.runAndWait()
-
+                                                                        mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                                            e))
                                                                     import os
                                                                     api_key = "AIzaSyAQnaak3RBQqHUX7Rml5nE9LV6TB1KLcJM"
                                                                     youtube = build('youtube', 'v3', developerKey=api_key,
@@ -2550,18 +2060,8 @@ while True:
                                                         loops += 1
                                             elif text == "O que você pode fazer":
                                                 loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                textoa = "\n \n Eu posso responder qualquer tipo de pergunta , enviar e-mail, posso ser usada para realizar tarefas complexas, como interpretar dados, tomar decisões, aprender e adquirir conhecimentos. posso ser usada para criar sistemas que possam responder a comandos e realizar tarefas com autonomia"
-                                                engine.say(textoa)
-                                                engine.runAndWait()
-
+                                                textoa ="\n \n Eu posso responder qualquer tipo de pergunta , enviar e-mail, posso ser usada para realizar tarefas complexas, como interpretar dados, tomar decisões, aprender e adquirir conhecimentos. posso ser usada para criar sistemas que possam responder a comandos e realizar tarefas com autonomia"
+                                                mensagemOla("\n \n Eu posso responder qualquer tipo de pergunta , enviar e-mail, posso ser usada para realizar tarefas complexas, como interpretar dados, tomar decisões, aprender e adquirir conhecimentos. posso ser usada para criar sistemas que possam responder a comandos e realizar tarefas com autonomia")
                                                 import tkinter as tk
                                                 root = tk.Tk()
                                                 root.withdraw()
@@ -2683,32 +2183,11 @@ while True:
                                                 break
                                             elif palavras[0] == "Oi" or palavras[0] == "Olá":
                                                 loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Oi Tudo Bem?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                mensagemOla("Oi Tudo Bem?")
                                                 break
                                             elif palavras[loop] == "e-mail" and palavras[0] != "qual" and palavras[0] != "o":
                                                 loop = 100
-
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Oi Tudo Bem ? Qual é o e-mail do destinatario?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                mensagemOla("Oi Tudo Bem ? Qual é o e-mail do destinatario?")
                                                 window.Disable()
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
@@ -2720,45 +2199,11 @@ while True:
                                                     window['senha'].update(
                                                         destinatario.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Qual é o assunto do E-mail?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
+                                                mensagemOla("Qual é o assunto do E-mail?")
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
                                                     audio = r.listen(source)
@@ -2769,45 +2214,12 @@ while True:
                                                     window['senha'].update(
                                                         assuntos.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
+                                                   
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Qual é o Corpo do e-mail?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                  mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
+                                                mensagemOla("Qual é o Corpo do e-mail?")
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
                                                     audio = r.listen(source)
@@ -2818,35 +2230,10 @@ while True:
                                                     window['senha'].update(
                                                         corpo.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
-
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
                                                 try:
                                                     def remove(string):
                                                         return string.replace(" ", "")
@@ -2866,19 +2253,7 @@ while True:
                                                     window['senha'].update(
                                                         email.capitalize())
 
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "E-MAIL ENVIADO COM SUCESSO!"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("E-MAIL ENVIADO COM SUCESSO!")
 
                                                     import tkinter as tk
                                                     root = tk.Tk()
@@ -2997,33 +2372,11 @@ while True:
                                                         img_file)
 
                                                 except:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível enviar o e-mail"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível enviar o e-mail")
                                                 break
                                             elif palavras[loop] == "reclamação":
                                                 loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Oi Tudo Bem ? Qual é o tema da reclamação?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                mensagemOla("Oi Tudo Bem ? Qual é o tema da reclamação?")
                                                 window.Disable()
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
@@ -3035,44 +2388,11 @@ while True:
                                                     # window['mensagem'].update(
                                                     #     reclamacao.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
+                                                mensagemOla(texto)
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
                                                     audio = r.listen(source)
@@ -3083,34 +2403,12 @@ while True:
                                                     window['senha'].update(
                                                         textoReclamacao.capitalize())
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
+                                                  
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
+
                                                 try:
                                                     myobj = {
                                                         "destinatario": "atendimento@othondecarvalho.com.br",
@@ -3236,36 +2534,9 @@ while True:
                                                     img.save(img_file)
                                                     window['textoteste'].update(
                                                         img_file)
-
-                                                    # window['senha'].update(
-                                                    #     "Desculpe-nos o transtorno!")
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "RECLAMAÇÃO ENVIADA COM SUCESSO!"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("RECLAMAÇÃO ENVIADA COM SUCESSO!")
                                                 except:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível enviar a reclamação!"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível enviar a reclamação!")
                                                     break
                                             elif palavras[0] == "assistir":
                                                 loop = 100
@@ -3291,17 +2562,7 @@ while True:
                                                 break
                                             elif palavra > 1 and palavras[loop] != "Oi" and palavras[loop] != "Olá" and palavras[loop] != "e-mail" and palavras[loop] != "reclamação":
                                                 loop = 100
-                                                engine = pyttsx3.init()
-                                                engine.setProperty('rate', 200)
-                                                engine.setProperty('pitch', 100)
-                                                engine.setProperty('volume', 0.9)
-                                                voices = engine.getProperty(
-                                                    'voices')
-                                                engine.setProperty(
-                                                    'voice', voices[2].id)
-                                                texto = "Você gostaria da sua resposta em vídeo ou em áudio?"
-                                                engine.say(texto)
-                                                engine.runAndWait()
+                                                mensagemOla("Você gostaria da sua resposta em vídeo ou em áudio?")
                                                 r = sr.Recognizer()
                                                 with sr.Microphone() as source:
 
@@ -3311,37 +2572,12 @@ while True:
                                                     videoTexto = r.recognize_google(
                                                         audio, language='pt-BR')
                                                 except sr.UnknownValueError:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível entender o áudio"
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível entender o áudio")
                                                     break
                                                 except sr.RequestError as e:
-                                                    engine = pyttsx3.init()
-                                                    engine.setProperty('rate', 200)
-                                                    engine.setProperty(
-                                                        'pitch', 100)
-                                                    engine.setProperty(
-                                                        'volume', 0.9)
-                                                    voices = engine.getProperty(
-                                                        'voices')
-                                                    engine.setProperty(
-                                                        'voice', voices[2].id)
-                                                    texto = "Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
-                                                        e)
-                                                    engine.say(texto)
-                                                    engine.runAndWait()
+                                                    mensagemOla("Não foi possível completar a requisição ao Google Speech Recognition; {0}".format(
+                                                        e))
                                                     break
-
                                                 audio = videoTexto.split()
                                                 tamanhoAudio = len(audio)
                                                 tratamentoErro = 0
@@ -3455,22 +2691,8 @@ while True:
                                                             datas += 1
 
                                                         if data != 0:
-
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
-                                                                "mes"], " de ", dataCerta["ano"]
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("Hoje é dia ", dataCerta["dia"], " do ", dataCerta[
+                                                                "mes"], " de ", dataCerta["ano"])
                                                             import tkinter as tk
                                                             root = tk.Tk()
                                                             root.withdraw()
@@ -3619,14 +2841,8 @@ while True:
                                                                     100, 1)
                                                                 font = ImageFont.truetype(
                                                                     'arial.ttf', 13)
-                                                            # if numerolinha > monitor:
-                                                            #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                            # text_position = (
-                                                            #     275, 1)
-                                                            # Desenha o texto na imagem com fundo transparente
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
-                                                            # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
                                                             img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(
@@ -3635,20 +2851,7 @@ while True:
 
                                                         elif "Tem" in text and "loja" in text or "se a" in text and "loja" in text or "Tem" in text and "othon" in text or "tem" in text and "loja" in text or "tem" in text and "othon" in text or "vende" in text and "othon" in text or "vende" in text and "loja" in text:
                                                             loop = 100
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "Irei listar os produtos com seus devidos preços, somente para a região 1 :"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("Irei listar os produtos com seus devidos preços, somente para a região 1 :")
                                                             i = 0
                                                             primeiro = json.loads(
                                                                 materialloja.text)
@@ -3819,11 +3022,6 @@ while True:
                                                                         100, 1)
                                                                     font = ImageFont.truetype(
                                                                         'arial.ttf', 13)
-                                                                # if numerolinha > monitor:
-                                                                #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                                # text_position = (
-                                                                #     275, 1)
-                                                                # Desenha o texto na imagem com fundo transparente
                                                                 draw.text(
                                                                     text_position, texto, font=font, fill=text_color)
                                                                 # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
@@ -3836,38 +3034,13 @@ while True:
                                                             sg.popup(
                                                                 textoc, location=(50, 50))
 
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "Para validar estoque, consulte um vendedor!"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("Para validar estoque, consulte um vendedor!")
 
                                                         elif len(w) > 2 and d[0] == 'onde' or d[0] == "aonde":
 
                                                             objeto = json.loads(w)
                                                             asd = objeto[0]
                                                             resposta = asd['resposta']
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-
                                                             import tkinter as tk
                                                             root = tk.Tk()
                                                             root.withdraw()
@@ -4015,22 +3188,13 @@ while True:
                                                                     100, 1)
                                                                 font = ImageFont.truetype(
                                                                     'arial.ttf', 13)
-                                                            # if numerolinha > monitor:
-                                                            #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                            # text_position = (
-                                                            #     275, 1)
-                                                            # Desenha o texto na imagem com fundo transparente
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
-                                                            # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
                                                             img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(
                                                                 img_file)
-
-                                                            texto = resposta
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla(resposta)
                                                             import tkinter as tk
                                                             root = tk.Tk()
                                                             root.withdraw()
@@ -4179,35 +3343,15 @@ while True:
                                                                     100, 1)
                                                                 font = ImageFont.truetype(
                                                                     'arial.ttf', 13)
-                                                            # if numerolinha > monitor:
-                                                            #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                            # text_position = (
-                                                            #     275, 1)
-                                                            # Desenha o texto na imagem com fundo transparente
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
-                                                            # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
                                                             img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(
                                                                 img_file)
                                                             break
                                                         elif hora != 0:
-
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = "São ", horas["hour"], " Horas ", horas["minute"], " Minutos"
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla("São ", horas["hour"], " Horas ", horas["minute"], " Minutos")
                                                             import tkinter as tk
                                                             root = tk.Tk()
                                                             root.withdraw()
@@ -4356,14 +3500,8 @@ while True:
                                                                     100, 1)
                                                                 font = ImageFont.truetype(
                                                                     'arial.ttf', 13)
-                                                            # if numerolinha > monitor:
-                                                            #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                            # text_position = (
-                                                            #     275, 1)
-                                                            # Desenha o texto na imagem com fundo transparente
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
-                                                            # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
                                                             img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(
@@ -4372,17 +3510,6 @@ while True:
 
                                                         elif respostaa == respostaaa and d[0] != "onde" and d[0] != "aonde":
                                                             resposta = respostaaa
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
 
                                                             import tkinter as tk
                                                             root = tk.Tk()
@@ -4545,10 +3672,7 @@ while True:
                                                             img.save(img_file)
                                                             window['textoteste'].update(
                                                                 img_file)
-
-                                                            texto = resposta
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla(resposta)
                                                             break
                                                         elif len(x) > 40:
 
@@ -4712,20 +3836,7 @@ while True:
                                                             window['textoteste'].update(
                                                                 img_file)
 
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = text
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla(text)
                                                             break
                                                         elif z.status_code == 200:
                                                             codprod = json.loads(
@@ -4741,17 +3852,6 @@ while True:
                                                             estoquedisponivel = ob['estoquedispothon']
                                                             descricao = dicCovid['nomeecommerce']
                                                             descricoes = dicCovid['descricao']
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 190)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
                                                             try:
                                                                 falar = descricao.split()
                                                             except:
@@ -4921,8 +4021,7 @@ while True:
                                                             img.save(img_file)
                                                             window['textoteste'].update(
                                                                 img_file)
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla(texto)
                                                             break
                                                         else:
                                                             prompt = text+"?"
@@ -5113,37 +4212,14 @@ while True:
                                                                     100, 1)
                                                                 font = ImageFont.truetype(
                                                                     'arial.ttf', 13)
-                                                            # if numerolinha > monitor:
-                                                            #      novaString = "\n \n Não é possivel exibir a resposta desta pergunta!\n a resposta ultrapassa a quantidade de linhas permitidas para a exibição"
-                                                            # text_position = (
-                                                            #     275, 1)
-                                                            # Desenha o texto na imagem com fundo transparente
+
                                                             draw.text(
                                                                 text_position, novaString, font=font, fill=text_color)
-                                                            # Salva a imagem com a nuvem de conversa e o texto como um arquivo temporário
                                                             img_file = './imagem/cloud_temp.png'
                                                             img.save(img_file)
                                                             window['textoteste'].update(filename=img_file)
 
-                                                            # Cria a interface gráfica do usuário com o campo de entrada editável na imagem
-
-                                                            #   [sg.InputText(key='-INPUT-', size=(50, 1))],
-                                                            #   [sg.Button('Enviar')]]
-
-                                                            engine = pyttsx3.init()
-                                                            engine.setProperty(
-                                                                'rate', 200)
-                                                            engine.setProperty(
-                                                                'pitch', 100)
-                                                            engine.setProperty(
-                                                                'volume', 0.9)
-                                                            voices = engine.getProperty(
-                                                                'voices')
-                                                            engine.setProperty(
-                                                                'voice', voices[2].id)
-                                                            texto = response
-                                                            engine.say(texto)
-                                                            engine.runAndWait()
+                                                            mensagemOla(texto)
                                                             window.Enable()
                                                             
                                                             # if videoTexto =="vídeo" or videoTexto== "em vídeo":
@@ -5195,27 +4271,11 @@ while True:
                                                 break
                                             loop += 1
                                     else:
-                                        engine = pyttsx3.init()
-                                        engine.setProperty('rate', 200)
-                                        engine.setProperty('pitch', 100)
-                                        engine.setProperty('volume', 0.9)
-                                        voices = engine.getProperty('voices')
-                                        engine.setProperty('voice', voices[2].id)
-                                        texto = ""
-                                        engine.say(texto)
-                                        engine.runAndWait()
+                                        mensagemOla("")
                                         window.Enable()
                                     simNao += 1
                         else:
-                                engine = pyttsx3.init()
-                                engine.setProperty('rate', 200)
-                                engine.setProperty('pitch', 100)
-                                engine.setProperty('volume', 0.9)
-                                voices = engine.getProperty('voices')
-                                engine.setProperty('voice', voices[2].id)
-                                texto = ""
-                                engine.say(texto)
-                                engine.runAndWait()
+                                mensagemOla("")
                                 window.Enable()
                             
             
